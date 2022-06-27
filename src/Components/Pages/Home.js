@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState /* , useEffect  */ } from "react";
 import { Box, Button, Typography, Container, Input } from "@mui/material";
 import axios from "axios";
-import { ethers } from "ethers";
+/* import { ethers } from "ethers"; */
 const Home = () => {
   const [domain, setDomain] = useState("");
   const [transferArray, setTransferArray] = useState([]);
-  const [transferHistoryFetched, setTransferHistoryFetched] = useState(false);
+  /*  const [transferHistoryFetched, setTransferHistoryFetched] = useState(false); */
+  // eslint-disable-next-line
   const [registry, setRegistry] = useState("");
   const [currentOwner, setCurrentOwner] = useState("");
   function handleDomainChange(e) {
@@ -27,11 +28,11 @@ const Home = () => {
       memoryArray.push(e);
     });
     console.log(memoryArray);
-    setTransferHistoryFetched(true);
+    /*  setTransferHistoryFetched(true); */
     setTransferArray(memoryArray);
     getNftImage();
   }
-  const [ID, setID] = useState("");
+  /*  const [ID, setID] = useState(""); */
   async function getNftImage() {
     let result = await axios.get(
       `https://unstoppabledomains.g.alchemy.com/domains/${domain}`,
