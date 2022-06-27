@@ -26,20 +26,21 @@ const Home = () => {
     result.data.data.forEach((e) => {
       memoryArray.push(e);
     });
-
+    console.log(memoryArray);
     setTransferHistoryFetched(true);
     setTransferArray(memoryArray);
     getNftImage();
   }
-
+  const [ID, setID] = useState("");
   async function getNftImage() {
     let result = await axios.get(
       `https://unstoppabledomains.g.alchemy.com/domains/${domain}`,
       { headers: { Authorization: AuthStr } }
     );
-    console.log(result.data.meta);
+    console.log(result.data);
     setRegistry(result.data.meta.registry);
     setCurrentOwner(result.data.meta.owner);
+    // setID(result.data.records.ipfs.html.value);
   }
 
   return (
@@ -105,7 +106,8 @@ const Home = () => {
               paddingLeft: "30px",
               borderWidth: "2px",
               textAlign: "left",
-              color: "white",
+              color: "black",
+              backgroundColor: "white",
             }}
           >
             <Typography variant={"h5"}>
@@ -143,6 +145,9 @@ const Home = () => {
                 <Box> Block Number: {e.blockNumber}</Box>
                 <Box> Blockchain: {e.blockchain}</Box>
                 <Box>NetworkID: {e.networkId}</Box>
+                {/* <Box>
+                  <img src={`https://ipfs.infura.io/ipfs/${ID}`}></img>
+                </Box> */}
               </Box>
             );
           })}
