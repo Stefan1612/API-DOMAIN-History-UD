@@ -16,6 +16,7 @@ const Home = () => {
   async function alchemyUD() {
     setButtonPressed(false);
     setDomainGallery([]);
+    setCounter(4);
     let memoryArray = [];
     if (domain === "") {
       return window.alert("You need to enter a domain");
