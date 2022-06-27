@@ -14,6 +14,8 @@ const Home = () => {
   }
   const AuthStr = "Bearer ".concat(process.env.REACT_APP_ALCHEMY_API_KEY);
   async function alchemyUD() {
+    setButtonPressed(false);
+    setDomainGallery([]);
     let memoryArray = [];
     if (domain === "") {
       return window.alert("You need to enter a domain");
