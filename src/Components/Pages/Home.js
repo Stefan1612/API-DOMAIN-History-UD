@@ -49,6 +49,7 @@ const Home = () => {
   const [counter, setCounter] = useState(4);
 
   async function generateDomainGallery() {
+    // eslint-disable-next-line
     if (domainGallery == "") {
       let result = await axios.get(
         `https://unstoppabledomains.g.alchemy.com/domains/?owners=${currentOwner}&sortBy=id&sortDirection=DESC&perPage=2`,
@@ -62,7 +63,7 @@ const Home = () => {
         `https://unstoppabledomains.g.alchemy.com/domains/?owners=${currentOwner}&sortBy=id&sortDirection=DESC&perPage=${counter}`,
         { headers: { Authorization: AuthStr } }
       );
-
+      // eslint-disable-next-line
       if (result.data.data != "") {
         const newCounter = counter + 2;
         setCounter(newCounter);
