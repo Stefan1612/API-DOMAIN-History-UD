@@ -11,7 +11,6 @@ const Home = () => {
   const [currentOwner, setCurrentOwner] = useState("");
   function handleDomainChange(e) {
     setDomain(e);
-    console.log(domain);
   }
   const AuthStr = "Bearer ".concat(process.env.REACT_APP_ALCHEMY_API_KEY);
   async function alchemyUD() {
@@ -33,6 +32,7 @@ const Home = () => {
     getNftImage();
   }
   /*  const [ID, setID] = useState(""); */
+
   async function getNftImage() {
     let result = await axios.get(
       `https://unstoppabledomains.g.alchemy.com/domains/${domain}`,
@@ -44,6 +44,42 @@ const Home = () => {
     // setID(result.data.records.ipfs.html.value);
   }
 
+  const [domainGallery, setDomainGallery] = useState([]);
+  const [buttonPressed, setButtonPressed] = useState(false);
+  const [counter, setCounter] = useState(4);
+
+  async function generateDomainGallery() {
+    if (domainGallery == "") {
+      let result = await axios.get(
+        `https://unstoppabledomains.g.alchemy.com/domains/?owners=${currentOwner}&sortBy=id&sortDirection=DESC&perPage=2`,
+        { headers: { Authorization: AuthStr } }
+      );
+
+      setDomainGallery(result.data.data);
+      setButtonPressed(true);
+    } else {
+      let result = await axios.get(
+        `https://unstoppabledomains.g.alchemy.com/domains/?owners=${currentOwner}&sortBy=id&sortDirection=DESC&perPage=${counter}`,
+        { headers: { Authorization: AuthStr } }
+      );
+
+      if (result.data.data != "") {
+        const newCounter = counter + 2;
+        setCounter(newCounter);
+        /* let memoryArray = domainGallery;
+        for (let i = 0; i < 2; i++) {
+          memoryArray.push(result.data.data[i]);
+        } */
+
+        setDomainGallery(result.data.data);
+
+        /* setButtonPressed(true); */
+      } else {
+        console.log("alert");
+        window.alert("Seems like we already fetched all domains");
+      }
+    }
+  }
   return (
     <Box
       sx={{
@@ -72,13 +108,19 @@ const Home = () => {
             <Input
               sx={{
                 backgroundColor: "white",
-                padding: "5px",
+                padding: "2px",
+                borderRadius: "4px",
+                paddingBottom: "4px",
+                paddingLeft: "15px",
               }}
               variant="filled"
               placeholder="Enter Domain"
               onChange={(e) => handleDomainChange(e.target.value)}
             ></Input>
-            <Button onClick={(e) => alchemyUD()}>get transfer History</Button>
+            &nbsp;
+            <Button variant={"contained"} onClick={(e) => alchemyUD()}>
+              get transfer History
+            </Button>
           </Box>
         </Box>
 
@@ -96,6 +138,62 @@ const Home = () => {
             }}
           >
             Current Domain Owner: {currentOwner}
+            <Box>
+              <Typography>
+                Interested in seeing the domain's owner domain gallery?
+                <br></br>If so, press this button!
+              </Typography>
+              <Button
+                variant={"contained"}
+                onClick={(e) => generateDomainGallery(e)}
+              >
+                Press me :)
+              </Button>
+            </Box>
+          </Box>
+        )}
+        {buttonPressed && (
+          <Box
+            style={{
+              border: "solid",
+              margin: "10px",
+              padding: "10px",
+              paddingLeft: "30px",
+              borderWidth: "2px",
+              textAlign: "left",
+              color: "black",
+              backgroundColor: "white",
+            }}
+          >
+            Domain Gallery of current Owner address
+          </Box>
+        )}
+        {buttonPressed &&
+          domainGallery.map((e) => {
+            return (
+              <Box
+                style={{
+                  border: "solid",
+                  margin: "10px",
+                  padding: "10px",
+                  paddingLeft: "30px",
+                  borderWidth: "2px",
+                  textAlign: "left",
+                  color: "white",
+                }}
+              >
+                {e.id}
+              </Box>
+            );
+          })}
+        {buttonPressed && (
+          <Box style={{}}>
+            <Button
+              variant={"contained"}
+              onClick={(e) => generateDomainGallery()}
+            >
+              Load more
+            </Button>
           </Box>
         )}
         {transferArray !== "" && (
