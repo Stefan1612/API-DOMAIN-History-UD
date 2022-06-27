@@ -106,6 +106,8 @@ const Home = () => {
             <Typography>
               Enter unstoppable Domain to see its transaction History and the
               current/prior owner/s
+              <br></br>
+              Optionally check currentOwners domain gallery
             </Typography>
           </Box>{" "}
           <Box>
