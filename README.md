@@ -10,5 +10,5 @@
 - Discord Name: SimpleBlock#6604
 - Unstoppable registered email: bernd49634@web.de
 
-# What is this project bout?
+# What is this project about?
 This project can be a great addition to any Domain related trading site or can be used as a standalone to quickly generate and grab info about a domain or the domain owner.
